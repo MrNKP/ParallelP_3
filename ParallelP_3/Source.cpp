@@ -8,8 +8,8 @@ using namespace std;
 
 //mutex res;
 
-const int sizeX = 10000;
-const int sizeY = 10000;
+const int sizeX = 10;
+const int sizeY = 10;
 const int numThreads = 4;
 int matrix[sizeX][sizeY];
 
@@ -93,8 +93,9 @@ int sum_parallel(int **matr)
 void sum(int **matr, int start, int finish, long& result)
 {
 	//res.lock();
+	int res = 0;
 	for (int i = start; i < finish; i++)
-		//res += *(*matr + i);
-		InterlockedAdd((volatile long *)&result, *(*matr + i));
+		res += *(*matr + i);
 	//res.unlock();
+	InterlockedAdd((volatile long *)&result, res);
 }
